@@ -71,5 +71,7 @@ Remember, with great bookmarking power comes great responsibility. Use QuickMark
 
 ## Fuzzy search using Fuse library will show all the results from inside the folders
 
-![Screenshot 2024-09-08 at 7 44 13 PM](https://github.com/user-attachments/assets/5534b7a8-1c66-484b-9d6e-7b299ce87102)
+<img width="387" alt="Screenshot 2024-09-08 at 11 58 57 PM" src="https://github.com/user-attachments/assets/cc3b0f8b-c08d-4322-8b4c-e63c5de72b28">
+
+
 
