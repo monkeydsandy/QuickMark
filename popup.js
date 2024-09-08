@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const query = searchInput.value.trim();
     if (query) {
       const results = fuzzySearch(query, allBookmarks);
-      displayBookmarks(results, query);
+      displayBookmarks(allBookmarks, query, new Set(results.map(r => r.folder)));
     } else {
       displayBookmarks(allBookmarks);
     }
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function displayBookmarks(bookmarks, query = '') {
+  function displayBookmarks(bookmarks, query = '', foldersToExpand = new Set()) {
     bookmarksList.innerHTML = '';
     const folderWiseBookmarks = groupBookmarksByFolder(bookmarks);
     
@@ -176,20 +176,26 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const bookmarkListElement = document.createElement('div');
       bookmarkListElement.className = 'bookmark-list';
-      if (expandedFolders.has(folder)) {
+      if (expandedFolders.has(folder) || foldersToExpand.has(folder)) {
         bookmarkListElement.classList.add('open');
         folderHeader.querySelector('.folder-toggle').classList.add('open');
       }
       
+      let folderHasMatchingBookmarks = false;
       for (const [date, bookmarkList] of Object.entries(dateWiseBookmarks)) {
         for (const bookmark of bookmarkList) {
           const bookmarkElement = createBookmarkElement(bookmark, query);
-          bookmarkListElement.appendChild(bookmarkElement);
+          if (bookmarkElement) {
+            folderHasMatchingBookmarks = true;
+            bookmarkListElement.appendChild(bookmarkElement);
+          }
         }
       }
       
-      folderElement.appendChild(bookmarkListElement);
-      bookmarksList.appendChild(folderElement);
+      if (folderHasMatchingBookmarks || !query) {
+        folderElement.appendChild(bookmarkListElement);
+        bookmarksList.appendChild(folderElement);
+      }
       
       folderHeader.addEventListener('click', () => {
         bookmarkListElement.classList.toggle('open');
@@ -219,6 +225,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function createBookmarkElement(bookmark, query) {
+    if (query && !bookmarkMatchesQuery(bookmark, query)) {
+      return null;
+    }
+
     const bookmarkElement = document.createElement('div');
     bookmarkElement.className = 'bookmark';
     
@@ -253,6 +263,11 @@ document.addEventListener('DOMContentLoaded', () => {
     bookmarkElement.appendChild(deleteBtn);
 
     return bookmarkElement;
+  }
+
+  function bookmarkMatchesQuery(bookmark, query) {
+    const searchableText = `${bookmark.title} ${bookmark.url} ${bookmark.folder}`.toLowerCase();
+    return searchableText.includes(query.toLowerCase());
   }
 
   function deleteBookmark(folder, date, url) {
