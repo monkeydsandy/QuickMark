@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QuickMark</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    body {
+      width: 350px;
+      height: 500px;
+      padding: 16px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Roboto', sans-serif;
+      background-color: #ffffff;
+      color: #333333;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      background-color: #f0f4f8;
+      padding: 12px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    h1 {
+      font-size: 20px;
+      font-weight: 500;
+      margin: 0;
+      flex-grow: 1;
+      color: #2c3e50;
+    }
+    #bookmarkCurrentBtn {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 14px;
+      transition: background-color 0.3s, transform 0.1s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    #bookmarkCurrentBtn:hover {
+      background-color: #2980b9;
+      transform: translateY(-1px);
+    }
+    #bookmarkCurrentBtn:active {
+      transform: translateY(1px);
+    }
+    #searchInput {
+      width: 100%;
+      padding: 10px 16px;
+      margin-bottom: 16px;
+      border: none;
+      border-radius: 20px;
+      background-color: #f0f4f8;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+      font-size: 16px;
+      transition: box-shadow 0.3s;
+    }
+    #searchInput:focus {
+      outline: none;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 0 0 0 2px #3498db40;
+    }
+    #bookmarksList {
+      flex-grow: 1;
+      overflow-y: auto;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      padding: 8px;
+    }
+    .folder {
+      margin-bottom: 8px;
+      border-radius: 8px;
+      background-color: #f8fafc;
+      transition: all 0.3s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .folder-header {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      cursor: pointer;
+    }
+    .folder-header:hover {
+      background-color: #e3f2fd;
+    }
+    .folder-name {
+      flex-grow: 1;
+      font-weight: 500;
+    }
+    .folder-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 4px;
+      color: #7f8c8d;
+      transition: transform 0.3s;
+    }
+    .folder-toggle.open {
+      transform: rotate(180deg);
+    }
+    .bookmark-list {
+      display: none;
+      padding-left: 20px;
+    }
+    .bookmark-list.open {
+      display: block;
+    }
+    .bookmark {
+      padding: 8px 12px;
+      margin-bottom: 4px;
+      border-radius: 4px;
+      background-color: #ffffff;
+      transition: all 0.3s;
+    }
+    .bookmark:hover {
+      background-color: #e3f2fd;
+    }
+    .date {
+      font-size: 12px;
+      color: #7f8c8d;
+      margin-bottom: 4px;
+    }
+    .highlight {
+      background-color: #fff176;
+      border-radius: 2px;
+      padding: 0 2px;
+    }
+    .deleteBtn {
+      background: none;
+      border: none;
+      color: #e74c3c;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 4px;
+      border-radius: 50%;
+      transition: all 0.3s;
+      margin-left: 8px;
+    }
+    .deleteBtn:hover {
+      color: #c0392b;
+      background-color: rgba(231, 76, 60, 0.1);
+    }
+    a {
+      color: #2980b9;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    a:hover {
+      color: #3498db;
+      text-decoration: underline;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #bdc3c7;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #95a5a6;
+    }
+    .modal {
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      border-radius: 8px;
+    }
+    #folderSelect {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 5px;
+    }
+    #createFolderBtn, #saveFolderBtn, #cancelFolderBtn {
+      margin-right: 5px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #createFolderBtn {
+      background-color: #4CAF50;
+      color: white;
+    }
+    #saveFolderBtn {
+      background-color: #008CBA;
+      color: white;
+    }
+    #cancelFolderBtn {
+      background-color: #f44336;
+      color: white;
+    }
+    .rename-folder,
+    .delete-folder {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 4px;
+      color: #7f8c8d;
+      transition: color 0.3s;
+    }
+    .rename-folder:hover,
+    .delete-folder:hover {
+      color: #34495e;
+    }
+    .delete-folder:hover {
+      color: #e74c3c;
+    }
+    @keyframes folderHighlight {
+      0% { background-color: #fff; }
+      50% { background-color: #e3f2fd; }
+      100% { background-color: #fff; }
+    }
+    .highlight-folder {
+      animation: folderHighlight 2s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>QuickMark</h1>
+    <button id="bookmarkCurrentBtn">Add</button>
+  </div>
+  <input type="text" id="searchInput" placeholder="Search bookmarks...">
+  <div id="bookmarksList"></div>
+  
+  <script src="lib/fuse.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

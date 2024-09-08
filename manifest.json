@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "QuickMark",
+  "version": "1.0",
+  "description": "Quickly save and organize your bookmarks with folders and dates",
+  "permissions": [
+    "tabs",
+    "storage",
+    "bookmarks",
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}
