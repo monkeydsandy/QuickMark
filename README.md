@@ -62,16 +62,15 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Remember, with great bookmarking power comes great responsibility. Use QuickMark wisely, and may your internet adventures be forever organized! 🚀🌟
 
-
-![Screenshot 2024-09-08 at 7 31 14 PM](https://github.com/user-attachments/assets/000bbeec-cee9-448d-8daf-27a9a510a533)
+<img width="387" alt="Screenshot 2024-09-14 at 3 20 43 AM" src="https://github.com/user-attachments/assets/67b56a0d-433a-41c5-90c2-db553c94f865">
 
 ## Create New Folder or Choose existing folder to save bookmarks
 
-![Screenshot 2024-09-08 at 7 31 38 PM](https://github.com/user-attachments/assets/677d33df-1e96-40a3-8c21-02f913b6a610)
+<img width="387" alt="Screenshot 2024-09-14 at 3 21 36 AM" src="https://github.com/user-attachments/assets/6d40e826-eaa1-4525-9231-1a68aea4b8ef">
 
 ## Fuzzy search using Fuse library will show all the results from inside the folders
 
-<img width="387" alt="Screenshot 2024-09-08 at 11 58 57 PM" src="https://github.com/user-attachments/assets/cc3b0f8b-c08d-4322-8b4c-e63c5de72b28">
+<img width="386" alt="Screenshot 2024-09-14 at 3 22 05 AM" src="https://github.com/user-attachments/assets/b20c9427-d123-4c08-84a8-140243a8665a">
 
 
 
